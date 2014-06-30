@@ -3,7 +3,7 @@ package com.bGameGDX.game;
 // Update-only GameObject
 public class UGameObject extends GameObject implements Updateable {
 
-	public void update(float deltaTime) {
+	public void Update(float deltaTime) {
 		System.out.println("update stuff");
 	}
 

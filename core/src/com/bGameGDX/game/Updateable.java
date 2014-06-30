@@ -1,5 +1,5 @@
 package com.bGameGDX.game;
 
 public interface Updateable {
-	void update(float deltaTime);
+	void Update(float deltaTime);
 }
