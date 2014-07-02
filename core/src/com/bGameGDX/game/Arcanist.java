@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Arcanist extends Sprite {
 	int health = 3;
+	int x,y;
 	String direction = null;
-	TextureRegion[] walkRight;
-	TextureRegion[] walkLeft;
-	TextureRegion[] walkUp;
-	TextureRegion[] walkDown;
-	boolean isCasting = false;
+	TextureRegion[][] walkAnimation;
+	boolean casting = false;
 	
 	///////////////////////////////
 	// Constructors ///////////////
 	public Arcanist() {
-		// TODO Auto-generated constructor stub
+		//default player avatar constructor
+		super(new Texture("mage_f.png"), 0, 0, 32, 36);
+		walkAnimation = split(this.getTexture(), 32,36);
 	}
 
 	public Arcanist(Texture texture) {
@@ -63,37 +63,78 @@ public class Arcanist extends Sprite {
 	public String getDirection() {
 		return direction;
 	}
-	///////////////////////////////
-	// Other Methods //////////////
+	
+	public void setHealth(int h) {
+		health = h;
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	////////////////////////////////
+	// movement methods ////////////
 	public void moveRight() {
-    	setDirection("RIGHT");
-    	setRegion(0, 36, 32, 36);
-    	translateX(100 * Gdx.graphics.getDeltaTime());
+		if ( (getDirection() != "RIGHT") || (y >= 2) ) {
+			x = 1; y = 0;
+	    	setDirection("RIGHT");
+	    	setRegion(walkAnimation[x][y]);
+		}
+		else {
+			y++;
+			setRegion(walkAnimation[x][y]);
+		}
+		translateX(100 * Gdx.graphics.getDeltaTime());
 	}
 	
 	public void moveLeft() {
-		setDirection("LEFT");
-		setRegion(0,108, 32, 36);
+		if ( (getDirection() != "LEFT") || (y >= 2) ) {
+			x = 3; y = 0;
+			setDirection("LEFT");
+			setRegion(walkAnimation[x][y]);
+		}
+		else {
+			y++;
+			setRegion(walkAnimation[x][y]);
+		}
 		translateX(-100 * Gdx.graphics.getDeltaTime());
 	}
 	
 	public void moveUp() {
-    	setDirection("UP");
-    	setRegion(0, 0, 32, 36);
+		if ( (getDirection() != "UP") || (y >= 2) ) {
+	    	x = 0; y = 0;
+			setDirection("UP");
+	    	setRegion(walkAnimation[x][y]);
+		}
+		else {
+			y++;
+			setRegion(walkAnimation[x][y]);
+		}
     	translateY(100 * Gdx.graphics.getDeltaTime());
 	}
 	
 	public void moveDown() {
-    	setDirection("DOWN");
-    	setRegion(0, 72, 32, 36);
+		if ( (getDirection() != "DOWN") || (y >= 2) ) {
+	    	x = 2; y = 0;
+			setDirection("DOWN");
+	    	setRegion(walkAnimation[x][y]);
+		}
+		else {
+			y++;
+			setRegion(walkAnimation[x][y]);
+		}
     	translateY(-100 * Gdx.graphics.getDeltaTime());
 	}
 	
+	///////////////////////////////
+	// Other Methods //////////////
 	public boolean isCasting() {
-		return isCasting;
+		return casting;
 	}
 	
 	public Sprite cast(String spellName) {
+		casting = true;
+		
 		if (spellName == "FIRETOSS")
 			return new Sprite();
 		else return null;
